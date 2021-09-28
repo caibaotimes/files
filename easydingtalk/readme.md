@@ -1,7 +1,56 @@
 
 **应用中 权限管理开通 接口的权限**
 
-登陆回调 到前端地址
+**登陆回调 到前端地址**
+
+
+## 安装
+```
+顺序安装
+composer require symfony/cache 
+
+composer require pimple/pimple
+
+composer require overtrue/http
+
+修改Client.php 增加 方法
+
+/**
+ * JSON request.
+ *
+ * @param string       $url
+ * @param string|array $data
+ * @param array        $query
+ *
+ * @throws \GuzzleHttp\Exception\GuzzleException
+ *
+ * @return \Psr\Http\Message\ResponseInterface|\Overtrue\Http\Support\Collection|array|object|string
+ */
+public function postJson(string $url, array $data = [], array $query = [])
+{
+    return $this->request($url, 'POST', ['query' => $query, 'json' => $data]);
+}
+
+
+composer.json 中新增
+
+"autoload": {
+        "classmap": [
+            "vendor/dingtalk"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "app/Helpers/functions.php",
+            "vendor/dingtalk/src/helpers.php"
+        ]
+    },
+
+
+```
 
 
 `composer info symfony/cache` 看看什么信息？
